@@ -77,11 +77,11 @@ Seu projeto será avaliado de acordo com os seguintes critérios:
 5. Ter uma aparência bonita
 ### Boa sorte!
 
-### -----------------------------------------------
+## Documentation
 
-### Documentation
 ### Get started with docker
-
+### Image create
+docker build . -t YOUR_NAME_IMAGE
 ### View created REPOSITORYS
 docker ps **or**
 docker image ls
