@@ -75,7 +75,22 @@ Seu projeto será avaliado de acordo com os seguintes critérios:
 3. Você seguiu as instruções de envio do desafio?
 4. Qualidade e cobertura dos testes unitários.
 5. Ter uma aparência bonita
-
----
-
 ### Boa sorte!
+
+### -----------------------------------------------
+
+### Documentation
+### Get started with docker
+
+### View created REPOSITORYS
+docker ps **or**
+docker image ls
+
+### Open folder in docker
+docker exec -it YOUR_IMAGE_ID sh   
+
+### Running Docker
+docker run --rm -p 3000:3000 YOUR_REPOSITORY
+
+### Open Url
+open url http://localhost:3000
