@@ -79,18 +79,20 @@ Seu projeto será avaliado de acordo com os seguintes critérios:
 
 ## Documentation
 
-### Get started with docker
-### Image create
-docker build . -t YOUR_NAME_IMAGE
+### Docker image create
+docker build . -t frontglobo
 ### View created REPOSITORYS
 docker ps **or**
 docker image ls
 
 ### Open folder in docker
-docker exec -it YOUR_IMAGE_ID sh   
+docker exec -it YOUR_CONTAINER_ID sh   
 
 ### Running Docker
-docker run --rm -p 3000:3000 YOUR_REPOSITORY
+docker run --rm -p 3000:3000 frontglobo
+
+### Stop the image Docker
+docker stop YOUR_CONTAINER_ID
 
 ### Open Url
 open url http://localhost:3000
