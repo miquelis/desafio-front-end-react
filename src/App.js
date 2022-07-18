@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
+import {Switch, Route, NavLink} from 'react-router-dom'
+import PokemonList from './components/PokemonList';
+import Pokemon from './components/Pokemon';
+import PokedexList from './components/PokedexList';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <nav>
+      <NavLink to='/'>Pokedex</NavLink>
+      <NavLink to='/pokemons'>Search</NavLink>
+    </nav>
+     <Switch>
+        <Route path='/' exact component={PokedexList} />
+        <Route path='/pokemons' exact component={PokemonList} />
+        <Route path='/pokemons/:pokemon' component={Pokemon}/>
+     </Switch>
+
     </div>
   );
 }
