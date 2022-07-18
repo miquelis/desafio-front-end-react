@@ -15,7 +15,6 @@
   "bugs": {
     "url": "https://github.com/alvaroico/ESX-desafio-front-end-react/issues"
   },
-  "homepage": "https://github.com/alvaroico/ESX-desafio-front-end-react#readme",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
