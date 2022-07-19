@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import CountrySelect from "../components/atoms/autoCompleteImput";
 import NavBar from "../components/molecules/NavBar";
-import Home from "./Home/Home";
+import Pokedex from "./Home/Pokedex";
 import "./App.css";
 import { getAllPokemonList } from "../services/api";
 import { IPokemonList } from "../interfaces/pokemonList";
+import { StySection } from "./styles";
 
 function App() {
   const [listaPokemon, setListaPokemon] = useState({
@@ -24,14 +25,24 @@ function App() {
   };
 
   useEffect(() => {
-    carregarListaPokemon();
+    return () => {
+      carregarListaPokemon();
+    };
   }, []);
 
   return (
     <>
-      <NavBar />
-      <CountrySelect results={listaPokemon.results} />
-      <Home />
+      {listaPokemon.count !== 0 ? (
+        <>
+          <NavBar />
+          <CountrySelect results={listaPokemon.results} />
+          <StySection>
+            <Pokedex results={listaPokemon.results} />
+          </StySection>
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
 }

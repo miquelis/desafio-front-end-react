@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IDetalhesPokemon } from "../interfaces/detalhes.pokemon";
 import { IPokemonList } from "../interfaces/pokemonList";
 
 const baseAxios = axios.create({
@@ -8,7 +9,7 @@ const baseAxios = axios.create({
 
 const getAllPokemonList = async () => {
   return await baseAxios
-    .get("/pokemon/?offset=1&limit=100000")
+    .get("/pokemon/?offset=0&limit=22")
     .then((resultado) => {
       const DadosResultado = resultado?.data as IPokemonList;
       return DadosResultado;
@@ -29,4 +30,17 @@ const getAllPokemonList = async () => {
     });
 };
 
-export { getAllPokemonList };
+const getPokemonDetalhes = async (nome: string) => {
+  return await baseAxios
+    .get(`/pokemon/${nome}/`)
+    .then((resultado) => {
+      const DadosResultado = resultado?.data as IDetalhesPokemon;
+      return DadosResultado;
+    })
+    .catch((erro) => {
+      console.error(erro);
+      return null
+    });
+};
+
+export { getAllPokemonList, getPokemonDetalhes };
