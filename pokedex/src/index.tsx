@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import NavBar from "./components/molecules/NavBar";
 import "./index.css";
 import App from "./pages/App";
 import reportWebVitals from "./reportWebVitals";
@@ -10,7 +9,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <NavBar />
     <App />
   </React.StrictMode>
 );
