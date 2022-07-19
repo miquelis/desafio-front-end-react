@@ -61,10 +61,9 @@ export const GetPokedexList = (itemList) => async dispatch => {
 }
 
 export const GetPokedexItemDeleted = (itemDeleted) => async dispatch => {
-    console.log('NAME',itemDeleted);
+
     const statePokedex = Store.getState().Pokedex.data
 
-    console.log(statePokedex);
     try {
         dispatch({
             type: "POKEDEX_DELETE_LOADING",
@@ -72,13 +71,9 @@ export const GetPokedexItemDeleted = (itemDeleted) => async dispatch => {
 
        dispatch({
             type: "POKEDEX_DELETE_SUCCESS",
-            payload: statePokedex.filter(({id}) => {
-                console.log( itemDeleted === id)
-                return itemDeleted !== id
-            }),
+            payload: statePokedex.filter(({id}) => itemDeleted !== id),
         })
     } catch (e) {
-        console.log(e);
         dispatch({
             type: "POKEDEX_DELETE_FAIL"
         })
