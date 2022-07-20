@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import { IPokemonList } from "../../interfaces/pokemonList";
+import { IPokemonList } from "../../../interfaces/pokemonList";
 
 const PokemonSelect: React.FC<IPokemonList> = ({
   results,

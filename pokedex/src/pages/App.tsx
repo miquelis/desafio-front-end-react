@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import CountrySelect from "../components/atoms/autoCompleteImput";
-import NavBar from "../components/molecules/NavBar";
+import CountrySelect from "../components/atoms/imput/autoCompleteImput";
+import NavBar from "../components/molecules/bar/NavBar";
 import Pokedex from "./Home/Pokedex";
 import "./App.css";
 import { getAllPokemonList } from "../services/api";
