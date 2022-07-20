@@ -36,9 +36,17 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
   url,
 }: IPokemonListResultsObjeto) => {
   const [expanded, setExpanded] = useState(false);
+  const [favorito, setFavorito] = useState(false);
   const [pokemonDetalhes, setPokemonDetalhes] = useState(
     {} as IDetalhesPokemon
   );
+
+  const consultaLocalHistori = () => {
+    const localStorageString = localStorage.getItem("pokemon_favorito");
+    return JSON.parse(
+      localStorageString === null ? '{"listaID":null}' : localStorageString
+    ) as ILocalStorageObjeto;
+  };
 
   const buscaDetalhesPokemon = async (name: string) => {
     const pokemonDetalhesSet = await getPokemonDetalhes(name);
@@ -47,22 +55,27 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
     }
   };
 
+
+
   useEffect(() => {
+    const favoritoPokemonLocal = (id: number) => {
+      const localStorageObjeto = consultaLocalHistori();
+      if (localStorageObjeto.listaID.find((i) => i === id) === id) {
+        setFavorito(true);
+      }
+    };
     return () => {
       buscaDetalhesPokemon(name);
+      favoritoPokemonLocal(parseInt(url.split("/")[6]));
     };
-  }, [name]);
+  }, [name, url]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   const handleFavoritoClick = (id: number) => {
-    const localStorageString = localStorage.getItem("pokemon_favorito");
-
-    const localStorageObjeto = JSON.parse(
-      localStorageString === null ? '{"listaID":null}' : localStorageString
-    ) as ILocalStorageObjeto;
+    const localStorageObjeto = consultaLocalHistori();
     if (
       localStorageObjeto.listaID === null ||
       localStorageObjeto.listaID.length === 0
@@ -72,8 +85,7 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
         JSON.stringify({ listaID: [id] })
       );
     } else {
-      
-      if (localStorageObjeto.listaID.find((i) => i === id)=== id) {
+      if (localStorageObjeto.listaID.find((i) => i === id) === id) {
         localStorage.setItem(
           "pokemon_favorito",
           JSON.stringify({
@@ -90,8 +102,6 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
         );
       }
     }
-
-    // const localStorageObjeto = JSON.parse(localStorageString);
   };
 
   return (
@@ -120,7 +130,11 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
                 aria-label="Adicionar aos Favoritos"
                 onClick={() => handleFavoritoClick(pokemonDetalhes.id)}
               >
-                <FavoriteIcon />
+                {favorito ? (
+                  <FavoriteIcon color="secondary" />
+                ) : (
+                  <FavoriteIcon />
+                )}
               </IconButton>
               <ExpandMore
                 expand={expanded}
