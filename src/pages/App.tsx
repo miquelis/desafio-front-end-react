@@ -30,7 +30,14 @@ const App: React.FC = () => {
   };
 
   const consultaLocalHistori = () => {
-    const localStorageString = localStorage.getItem("pokemon_favorito");
+    
+    if (localStorage.getItem("pokemon_favorito") === null) {
+      localStorage.setItem(
+        "pokemon_favorito",
+        JSON.stringify({ listaID: [] })
+      );
+    }
+    const localStorageString = localStorage.getItem("pokemon_favorito")
     setIdPokemonSelecionado(
       JSON.parse(
         localStorageString === null ? '{"listaID":null}' : localStorageString
