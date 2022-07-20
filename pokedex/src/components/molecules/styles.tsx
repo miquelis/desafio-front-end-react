@@ -6,7 +6,7 @@ export const StyNav = styled("nav")`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: #282c34;
+  background-color: #ebf2f5;
 `;
 export const StyDiv = styled("div")``;
 export const StyImg = styled("img")`

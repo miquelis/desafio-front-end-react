@@ -30,9 +30,9 @@ const getAllPokemonList = async () => {
     });
 };
 
-const getPokemonDetalhes = async (nome: string) => {
+const getPokemonDetalhes = async (id: number) => {
   return await baseAxios
-    .get(`/pokemon/${nome}/`)
+    .get(`/pokemon/${id}/`)
     .then((resultado) => {
       const DadosResultado = resultado?.data as IDetalhesPokemon;
       return DadosResultado;

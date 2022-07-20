@@ -11,7 +11,6 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { IPokemonListResultsObjeto } from "../../../interfaces/pokemonList";
 import { getPokemonDetalhes } from "../../../services/api";
 import { IDetalhesPokemon } from "../../../interfaces/detalhes.pokemon";
 import { ILocalStorageObjeto } from "../../../interfaces/localStorage.pokemon";
@@ -31,10 +30,13 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
-  name,
-  url,
-}: IPokemonListResultsObjeto) => {
+export interface IPokemonListlocal {
+  id: number;
+}
+
+const RecipeReviewCard: React.FC<IPokemonListlocal> = ({
+  id,
+}: IPokemonListlocal) => {
   const [expanded, setExpanded] = useState(false);
   const [favorito, setFavorito] = useState(false);
   const [pokemonDetalhes, setPokemonDetalhes] = useState(
@@ -48,14 +50,12 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
     ) as ILocalStorageObjeto;
   };
 
-  const buscaDetalhesPokemon = async (name: string) => {
-    const pokemonDetalhesSet = await getPokemonDetalhes(name);
+  const buscaDetalhesPokemon = async (id: number) => {
+    const pokemonDetalhesSet = await getPokemonDetalhes(id);
     if (pokemonDetalhesSet !== null) {
       setPokemonDetalhes(pokemonDetalhesSet);
     }
   };
-
-
 
   useEffect(() => {
     const favoritoPokemonLocal = (id: number) => {
@@ -65,10 +65,10 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
       }
     };
     return () => {
-      buscaDetalhesPokemon(name);
-      favoritoPokemonLocal(parseInt(url.split("/")[6]));
+      buscaDetalhesPokemon(id);
+      favoritoPokemonLocal(id);
     };
-  }, [name, url]);
+  }, [id]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -84,6 +84,7 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
         "pokemon_favorito",
         JSON.stringify({ listaID: [id] })
       );
+      setFavorito(true);
     } else {
       if (localStorageObjeto.listaID.find((i) => i === id) === id) {
         localStorage.setItem(
@@ -92,6 +93,7 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
             listaID: localStorageObjeto.listaID.filter((i) => i !== id),
           })
         );
+        setFavorito(false);
       } else {
         localStorageObjeto.listaID.push(id);
         localStorage.setItem(
@@ -100,6 +102,7 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
             listaID: localStorageObjeto.listaID,
           })
         );
+        setFavorito(true);
       }
     }
   };

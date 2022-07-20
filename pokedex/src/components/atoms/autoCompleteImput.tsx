@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -10,18 +10,22 @@ const PokemonSelect: React.FC<IPokemonList> = ({
   next,
   count,
 }: IPokemonList) => {
+  const [idPokemonSelecionado, setIdPokemonSelecionado] = useState(0);
+
+  console.log(idPokemonSelecionado);
+
   return (
     <Autocomplete
       id="pokemon-select"
       sx={{
         width: "100%",
-        ".MuiOutlinedInput-root": {
-            borderRadius: 50,
-            borderColor: "azure",
-            borderWidth: 10,
-        },
       }}
       options={results}
+      onChange={(e, value) => {
+        setIdPokemonSelecionado(
+          value?.url.split("/")[6] ? parseInt(value?.url.split("/")[6]) : 0
+        );
+      }}
       autoHighlight
       getOptionLabel={(option) => `${option.name} ${option.url.split("/")[6]}`}
       renderOption={(props, option) => (
@@ -44,14 +48,14 @@ const PokemonSelect: React.FC<IPokemonList> = ({
       )}
       renderInput={(params) => (
         <TextField
-          // color="info"
+          color="warning"
           {...params}
           label="Busque seu Pokémon"
           inputProps={{
             ...params.inputProps,
-            autoComplete: "new-password", // disable autocomplete and autofill
+            autoComplete: "new-password",
           }}
-          sx={{ backgroundColor: "#646975" }}
+          sx={{ backgroundColor: "#ebf2f5" }}
         />
       )}
     />

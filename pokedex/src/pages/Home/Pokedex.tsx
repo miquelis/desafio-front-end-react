@@ -1,22 +1,19 @@
 import React from "react";
 import RecipeReviewCard from "../../components/atoms/Card/pokemon";
-import { IPokemonList } from "../../interfaces/pokemonList";
+import { ILocalStorageObjeto } from "../../interfaces/localStorage.pokemon";
 import "./Pokedex.css";
 
-const Pokedex: React.FC<IPokemonList> = ({
-  results,
-  previous,
-  next,
-  count,
-}: IPokemonList) => {
+
+const Pokedex: React.FC<ILocalStorageObjeto> = ({
+  listaID
+}: ILocalStorageObjeto) => {
   return (
     <>
-      {results.map((result, index) => {
+      {listaID.map((result, index) => {
         return (
           <RecipeReviewCard
-            key={result.name + index}
-            name={result.name}
-            url={result.url}
+            key={Math.floor(Math.random() * 1051421) + index}
+            id={result}
           />
         );
       })}

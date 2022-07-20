@@ -6,6 +6,7 @@ import "./App.css";
 import { getAllPokemonList } from "../services/api";
 import { IPokemonList } from "../interfaces/pokemonList";
 import { StySection } from "./styles";
+import { ILocalStorageObjeto } from "../interfaces/localStorage.pokemon";
 
 function App() {
   const [listaPokemon, setListaPokemon] = useState({
@@ -19,6 +20,7 @@ function App() {
       },
     ],
   } as unknown as IPokemonList);
+  const [idPokemonSelecionado, setIdPokemonSelecionado] = useState({listaID: [0]});
 
   const carregarListaPokemon = async () => {
     setListaPokemon(await getAllPokemonList());
@@ -30,6 +32,20 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const consultaLocalHistori = () => {
+      const localStorageString = localStorage.getItem("pokemon_favorito");
+      setIdPokemonSelecionado(
+        JSON.parse(
+          localStorageString === null ? '{"listaID":null}' : localStorageString
+        ) as ILocalStorageObjeto
+      );
+    };
+    return () => {
+      consultaLocalHistori();
+    };
+  }, [setIdPokemonSelecionado]);
+
   return (
     <>
       {listaPokemon.count !== 0 ? (
@@ -37,7 +53,7 @@ function App() {
           <NavBar />
           <CountrySelect results={listaPokemon.results} />
           <StySection>
-            <Pokedex results={listaPokemon.results} />
+            <Pokedex listaID={idPokemonSelecionado.listaID} />
           </StySection>
         </>
       ) : (
