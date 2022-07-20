@@ -14,6 +14,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { IPokemonListResultsObjeto } from "../../../interfaces/pokemonList";
 import { getPokemonDetalhes } from "../../../services/api";
 import { IDetalhesPokemon } from "../../../interfaces/detalhes.pokemon";
+import { ILocalStorageObjeto } from "../../../interfaces/localStorage.pokemon";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -56,8 +57,41 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
     setExpanded(!expanded);
   };
 
-  const handleFavoritoClick = () => {
-    setExpanded(!expanded);
+  const handleFavoritoClick = (id: number) => {
+    const localStorageString = localStorage.getItem("pokemon_favorito");
+
+    const localStorageObjeto = JSON.parse(
+      localStorageString === null ? '{"listaID":null}' : localStorageString
+    ) as ILocalStorageObjeto;
+    if (
+      localStorageObjeto.listaID === null ||
+      localStorageObjeto.listaID.length === 0
+    ) {
+      localStorage.setItem(
+        "pokemon_favorito",
+        JSON.stringify({ listaID: [id] })
+      );
+    } else {
+      
+      if (localStorageObjeto.listaID.find((i) => i === id)=== id) {
+        localStorage.setItem(
+          "pokemon_favorito",
+          JSON.stringify({
+            listaID: localStorageObjeto.listaID.filter((i) => i !== id),
+          })
+        );
+      } else {
+        localStorageObjeto.listaID.push(id);
+        localStorage.setItem(
+          "pokemon_favorito",
+          JSON.stringify({
+            listaID: localStorageObjeto.listaID,
+          })
+        );
+      }
+    }
+
+    // const localStorageObjeto = JSON.parse(localStorageString);
   };
 
   return (
@@ -84,7 +118,7 @@ const RecipeReviewCard: React.FC<IPokemonListResultsObjeto> = ({
             <CardActions disableSpacing>
               <IconButton
                 aria-label="Adicionar aos Favoritos"
-                onClick={handleFavoritoClick}
+                onClick={() => handleFavoritoClick(pokemonDetalhes.id)}
               >
                 <FavoriteIcon />
               </IconButton>
