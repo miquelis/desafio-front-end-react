@@ -8,7 +8,7 @@ import { IPokemonList } from "../interfaces/pokemonList";
 import { StySection } from "./styles";
 import { ILocalStorageObjeto } from "../interfaces/localStorage.pokemon";
 
-function App() {
+const App: React.FC = () => {
   const [listaPokemon, setListaPokemon] = useState({
     count: 0,
     next: "",
@@ -86,6 +86,6 @@ function App() {
       )}
     </>
   );
-}
+};
 
 export default App;
