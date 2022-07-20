@@ -20,7 +20,10 @@ function App() {
       },
     ],
   } as unknown as IPokemonList);
-  const [idPokemonSelecionado, setIdPokemonSelecionado] = useState({listaID: [0]});
+  const [idPokemonSelecionado, setIdPokemonSelecionado] = useState({
+    listaID: [0],
+  });
+  const [idPokemonSelect, setIdPokemonSelect] = useState(0);
 
   const carregarListaPokemon = async () => {
     setListaPokemon(await getAllPokemonList());
@@ -32,26 +35,48 @@ function App() {
     };
   }, []);
 
+  const consultaLocalHistori = () => {
+    const localStorageString = localStorage.getItem("pokemon_favorito");
+    setIdPokemonSelecionado(
+      JSON.parse(
+        localStorageString === null ? '{"listaID":null}' : localStorageString
+      ) as ILocalStorageObjeto
+    );
+  };
+
   useEffect(() => {
-    const consultaLocalHistori = () => {
-      const localStorageString = localStorage.getItem("pokemon_favorito");
-      setIdPokemonSelecionado(
-        JSON.parse(
-          localStorageString === null ? '{"listaID":null}' : localStorageString
-        ) as ILocalStorageObjeto
-      );
-    };
     return () => {
       consultaLocalHistori();
     };
   }, [setIdPokemonSelecionado]);
 
+  useEffect(() => {
+    return () => {
+      const adicionarPokemon = (id: number) => {
+        if (id !== 0) {
+          idPokemonSelecionado.listaID.push(id);
+          setIdPokemonSelecionado(idPokemonSelecionado);
+        }
+      };
+      adicionarPokemon(idPokemonSelect);
+    };
+  }, [idPokemonSelecionado, idPokemonSelect]);
+
   return (
     <>
+      <NavBar />
       {listaPokemon.count !== 0 ? (
         <>
-          <NavBar />
-          <CountrySelect results={listaPokemon.results} />
+          <CountrySelect
+            results={listaPokemon.results}
+            setIdPokemonSelect={setIdPokemonSelect}
+          />
+        </>
+      ) : (
+        ""
+      )}
+      {idPokemonSelecionado.listaID[0] !== 0 ? (
+        <>
           <StySection>
             <Pokedex listaID={idPokemonSelecionado.listaID} />
           </StySection>

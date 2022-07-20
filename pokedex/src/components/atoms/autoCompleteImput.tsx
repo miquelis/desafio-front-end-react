@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -9,10 +9,15 @@ const PokemonSelect: React.FC<IPokemonList> = ({
   previous,
   next,
   count,
+  setIdPokemonSelect,
 }: IPokemonList) => {
   const [idPokemonSelecionado, setIdPokemonSelecionado] = useState(0);
 
-  console.log(idPokemonSelecionado);
+  useEffect(() => {
+    return () => {
+      setIdPokemonSelect(idPokemonSelecionado);
+    };
+  }, [idPokemonSelecionado, setIdPokemonSelect]);
 
   return (
     <Autocomplete

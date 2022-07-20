@@ -8,4 +8,5 @@ export interface IPokemonList {
   next?: string;
   previous?: string;
   results: IPokemonListResultsObjeto[];
+  setIdPokemonSelect: React.Dispatch<React.SetStateAction<number>>
 }
