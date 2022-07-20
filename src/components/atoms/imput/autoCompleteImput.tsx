@@ -11,14 +11,6 @@ const PokemonSelect: React.FC<IPokemonList> = ({
   count,
   setIdPokemonSelect,
 }: IPokemonList) => {
-  const [idPokemonSelecionado, setIdPokemonSelecionado] = useState(0);
-
-  useEffect(() => {
-    return () => {
-      setIdPokemonSelect(idPokemonSelecionado);
-    };
-  }, [idPokemonSelecionado, setIdPokemonSelect]);
-
   return (
     <Autocomplete
       id="pokemon-select"
@@ -27,7 +19,7 @@ const PokemonSelect: React.FC<IPokemonList> = ({
       }}
       options={results}
       onChange={(e, value) => {
-        setIdPokemonSelecionado(
+        setIdPokemonSelect(
           value?.url.split("/")[6] ? parseInt(value?.url.split("/")[6]) : 0
         );
       }}

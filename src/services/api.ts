@@ -9,7 +9,7 @@ const baseAxios = axios.create({
 
 const getAllPokemonList = async () => {
   return await baseAxios
-    .get("/pokemon/?offset=0&limit=22")
+    .get("/pokemon/?offset=0&limit=2000")
     .then((resultado) => {
       const DadosResultado = resultado?.data as IPokemonList;
       return DadosResultado;

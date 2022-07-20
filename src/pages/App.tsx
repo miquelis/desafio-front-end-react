@@ -29,12 +29,6 @@ const App: React.FC = () => {
     setListaPokemon(await getAllPokemonList());
   };
 
-  useEffect(() => {
-    return () => {
-      carregarListaPokemon();
-    };
-  }, []);
-
   const consultaLocalHistori = () => {
     const localStorageString = localStorage.getItem("pokemon_favorito");
     setIdPokemonSelecionado(
@@ -46,19 +40,22 @@ const App: React.FC = () => {
 
   useEffect(() => {
     return () => {
+      carregarListaPokemon();
       consultaLocalHistori();
     };
-  }, [setIdPokemonSelecionado]);
+  }, []);
 
   useEffect(() => {
+    if (idPokemonSelect !== 0) {
+      const novo = idPokemonSelecionado;
+      novo.listaID.push(idPokemonSelect);
+      setIdPokemonSelecionado(novo);
+      setIdPokemonSelect(0);
+    }
     return () => {
-      const adicionarPokemon = (id: number) => {
-        if (id !== 0) {
-          idPokemonSelecionado.listaID.push(id);
-          setIdPokemonSelecionado(idPokemonSelecionado);
-        }
-      };
-      adicionarPokemon(idPokemonSelect);
+      if (idPokemonSelect !== 0) {
+        setIdPokemonSelect(0);
+      }
     };
   }, [idPokemonSelecionado, idPokemonSelect]);
 
